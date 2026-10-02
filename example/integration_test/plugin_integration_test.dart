@@ -7,6 +7,9 @@
 // https://flutter.dev/to/integration-testing
 
 
+import 'dart:io' show Platform;
+
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -19,4 +22,13 @@ void main() {
       (WidgetTester tester) async {
     await expectLater(AppSettings.openAppSettings(), completes);
   });
+
+  testWidgets('openAppSettings reports Wi-Fi URL availability on iOS',
+      (WidgetTester tester) async {
+    try {
+      await AppSettings.openAppSettings(type: AppSettingsType.wifi);
+    } on PlatformException catch (error) {
+      expect(error.code, 'settings_unavailable');
+    }
+  }, skip: !Platform.isIOS);
 }

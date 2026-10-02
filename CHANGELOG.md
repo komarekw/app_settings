@@ -1,3 +1,6 @@
+## Unreleased
+- Add best-effort iOS Wi-Fi settings navigation with a fallback to top-level device Settings when the Wi-Fi URL cannot be opened.
+
 ## 9.0.0
 - BREAKING: raise SwiftPM iOS platform minimum to 13.0- [#284](https://github.com/spencerccf/app_settings/pull/284)
 

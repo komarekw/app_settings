@@ -27,6 +27,9 @@ public class AppSettingsPlugin: NSObject, @preconcurrency FlutterPlugin, UIWindo
         let type = arguments["type"] as! String
 
         switch(type) {
+        case "wifi":
+            openWifiSettings(result: result)
+            break
         case "notification":
             if #available(iOS 16.0, *) {
                 openSettings(settingsUrl: UIApplication.openNotificationSettingsURLString)
@@ -64,6 +67,29 @@ public class AppSettingsPlugin: NSObject, @preconcurrency FlutterPlugin, UIWindo
         }
     }
     
+    private func openWifiSettings(result: @escaping FlutterResult) {
+        // iOS does not provide public URLs for Wi-Fi or top-level Settings.
+        guard let wifiURL = URL(string: "App-Prefs:root=WIFI"),
+              let settingsURL = URL(string: "App-Prefs:") else {
+            result(FlutterError(code: "invalid_settings_url", message: "Unable to create iOS Settings URLs.", details: nil))
+            return
+        }
+
+        UIApplication.shared.open(wifiURL, options: [:]) { opened in
+            if opened {
+                result(nil)
+            } else {
+                UIApplication.shared.open(settingsURL, options: [:]) { opened in
+                    if opened {
+                        result(nil)
+                    } else {
+                        result(FlutterError(code: "settings_unavailable", message: "Unable to open iOS Settings.", details: nil))
+                    }
+                }
+            }
+        }
+    }
+
     private func openSettings(settingsUrl: String) {
         guard let url = URL(string: settingsUrl) else {
             return

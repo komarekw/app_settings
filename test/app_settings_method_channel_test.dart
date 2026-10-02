@@ -41,6 +41,17 @@ void main() {
     ]);
   });
 
+  test('openAppSettings sends the wifi type to the native plugin', () async {
+    await platform.openAppSettings(type: AppSettingsType.wifi);
+
+    expect(log, <Matcher>[
+      isMethodCall('openSettings', arguments: <String, dynamic>{
+        'asAnotherTask': false,
+        'type': 'wifi',
+      }),
+    ]);
+  });
+
   test(
       'openAppSettingsPanel invokes openSettingsPanel with the expected arguments',
       () async {

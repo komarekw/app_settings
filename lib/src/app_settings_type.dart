@@ -121,9 +121,10 @@ enum AppSettingsType {
   /// Only supported on Android.
   vpn,
 
-  /// Open the wifi settings.
+  /// Open the Wi-Fi settings.
   ///
-  /// Only supported on Android.
+  /// On iOS, uses an undocumented Settings URL and falls back to the
+  /// top-level device Settings screen if opening the Wi-Fi URL fails.
   wifi,
 
   /// Open the wireless settings.

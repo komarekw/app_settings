@@ -47,6 +47,13 @@ Open the settings of the application using `AppSettings.openAppSettings()`.
 By default, `AppSettingsType.settings` is used as the type, which opens the general application settings.
 If the given type is not supported on the current platform, the general settings are opened instead.
 
+`AppSettingsType.wifi` opens Wi-Fi settings on Android and attempts to open the
+Wi-Fi page on iOS. iOS uses an undocumented Settings URL, so the destination is
+not guaranteed across iOS versions. If iOS reports that the Wi-Fi URL cannot
+be opened, the plugin attempts to open the top-level device Settings screen
+instead (also via an undocumented URL). If neither URL opens, the call throws
+a platform exception. Some iOS versions and simulators may reject both URLs.
+
 **Android** If `asAnotherTask` is set to true, the settings page is opened in a different Activity.
 
 ```dart
