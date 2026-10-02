@@ -70,6 +70,7 @@ public class AppSettingsPlugin: NSObject, @preconcurrency FlutterPlugin, UIWindo
     private func openWifiSettings(result: @escaping FlutterResult) {
         // iOS does not provide public URLs for Wi-Fi or top-level Settings.
         guard let wifiURL = URL(string: "App-Prefs:root=WIFI"),
+              let wifiURL = URL(string: "App-Prefs:WIFI"),
               let settingsURL = URL(string: "App-Prefs:") else {
             result(FlutterError(code: "invalid_settings_url", message: "Unable to create iOS Settings URLs.", details: nil))
             return
